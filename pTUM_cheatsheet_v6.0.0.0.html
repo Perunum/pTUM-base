@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pTUM-base v6.0.0.0 — Function Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
+<style>
+  :root {
+    --orange:  #f5821f;
+    --black:   #231f20;
+    --bg:      #f5f5f7;
+    --blue:    #0077b6;
+    --white:   #ffffff;
+    --mono:    'Courier New', Courier, monospace;
+    --text-muted: #5f5e5a;
+    --border:  #d4d2cb;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 8.5pt;
+    color: var(--black);
+    background: var(--bg);
+    padding: 10mm 12mm;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .title-bar {
+    background: var(--blue);
+    color: var(--white);
+    padding: 10px 16px 8px;
+    border-radius: 0;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .title-bar h1 {
+    font-size: 13pt;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--white);
+  }
+
+  .title-bar p {
+    font-size: 7pt;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .title-accent {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--orange);
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section { margin-bottom: 14px; }
+
+  .section-label {
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    padding: 4px 0 4px 10px;
+    border-left: 2px solid var(--orange);
+    margin-bottom: 6px;
+    background: transparent;
+  }
+
+  /* ── FUNCTION CARD ── */
+  .fn-card {
+    display: flex;
+    background: var(--white);
+    border: 0.5px solid var(--border);
+    border-top: 2px solid var(--blue);
+    margin-bottom: 5px;
+    page-break-inside: avoid;
+  }
+
+  .fn-left {
+    width: 38%;
+    background: var(--bg);
+    padding: 6px 8px;
+    border-right: 0.5px solid var(--border);
+  }
+
+  .fn-right {
+    width: 62%;
+    background: var(--white);
+    padding: 5px 8px;
+  }
+
+  /* Signature */
+  .fn-sig {
+    font-family: var(--mono);
+    font-size: 7.5pt;
+    font-weight: bold;
+    color: var(--blue);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .fn-sig code { font-family: inherit; }
+
+  /* Description */
+  .fn-desc {
+    font-size: 7pt;
+    color: var(--black);
+    line-height: 1.5;
+    margin-bottom: 4px;
+  }
+
+  /* Return type */
+  .fn-ret {
+    font-size: 6.5pt;
+    color: var(--orange);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* ── PARAM TABLE ── */
+  .param-tbl {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .param-tbl tr {
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .param-tbl tr:last-child { border-bottom: none; }
+
+  .param-tbl td {
+    vertical-align: top;
+    padding: 2px 4px 2px 0;
+    font-size: 7pt;
+    line-height: 1.45;
+  }
+
+  .p-name {
+    width: 30%;
+    font-family: var(--mono);
+    font-size: 7pt;
+    color: var(--blue);
+    white-space: nowrap;
+  }
+
+  .p-type {
+    width: 22%;
+    font-family: var(--mono);
+    font-size: 6.5pt;
+    color: var(--text-muted);
+  }
+
+  .p-desc {
+    width: 48%;
+    color: var(--text-muted);
+    font-weight: 300;
+  }
+
+  /* Keyword badge */
+  .kw-badge {
+    font-family: 'Inter', sans-serif;
+    font-size: 5pt;
+    font-weight: 600;
+    color: var(--orange);
+    border: 0.5px solid var(--orange);
+    border-radius: 2px;
+    padding: 0 2.5px;
+    margin-left: 3px;
+    vertical-align: middle;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    margin-top: 16px;
+    padding-top: 6px;
+    border-top: 1px solid var(--blue);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 6.5pt;
+    color: var(--text-muted);
+    font-weight: 300;
+  }
+
+  .doc-footer a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  .doc-footer a:hover { color: var(--orange); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="title-bar">
+  <h1><span class="title-accent"></span>pTUM-base v6.0.0.0</h1>
+  <p>Function Reference &middot; Neural distribution models</p>
+</div>
+
+<!-- INITIALISATION -->
+<div class="section">
+  <div class="section-label">Initialisation</div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>initCatDist(nvars, ncats, layers; shift=0.1)</code></div>
+      <div class="fn-desc">Allocate weights & biases arrays for a categorical distribution network. Output layer biases set to 0; hidden layers atanh-spaced + shift.</div>
+      <div class="fn-ret">&#8594; (w, b, npars) :: (Array, Array, Int)</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>nvars</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">inputs including the category column</td></tr>
+        <tr><td class="p-name"><code>ncats</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">number of categories</td></tr>
+        <tr><td class="p-name"><code>layers</code></td><td class="p-type"><code>Vector{Int}</code></td><td class="p-desc">hidden layer widths</td></tr>
+        <tr><td class="p-name"><code>shift</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Float64</code></td><td class="p-desc">bias init offset</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>initConDist(nvars, layers1, layers2; shift=0.1)</code></div>
+      <div class="fn-desc">Allocate weights & biases arrays for a continuous distribution network. Output layer bias set to 0; hidden layers atanh-spaced + shift.</div>
+      <div class="fn-ret">&#8594; (w, b, npars) :: (Array, Array, Int)</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>nvars</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">total inputs including target</td></tr>
+        <tr><td class="p-name"><code>layers1</code></td><td class="p-type"><code>Vector{Int}</code></td><td class="p-desc">pre-warp hidden layer widths</td></tr>
+        <tr><td class="p-name"><code>layers2</code></td><td class="p-type"><code>Vector{Int}</code></td><td class="p-desc">post-warp hidden layer widths</td></tr>
+        <tr><td class="p-name"><code>shift</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Float64</code></td><td class="p-desc">bias init offset</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>initTimDist(nvars, nevents, layers1, layers2; shift=0.1)</code></div>
+      <div class="fn-desc">Allocate weights & biases arrays for a time-to-event with competing-risks network. Event-prob sub-layer and output biases set to 0; others atanh-spaced + shift.</div>
+      <div class="fn-ret">&#8594; (w, b, npars) :: (Array, Array, Int)</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>nvars</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">inputs incl. time-start &amp; time-end columns</td></tr>
+        <tr><td class="p-name"><code>nevents</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">number of competing events</td></tr>
+        <tr><td class="p-name"><code>layers1</code></td><td class="p-type"><code>Vector{Int}</code></td><td class="p-desc">pre-warp layer widths</td></tr>
+        <tr><td class="p-name"><code>layers2</code></td><td class="p-type"><code>Vector{Int}</code></td><td class="p-desc">post-warp layer widths</td></tr>
+        <tr><td class="p-name"><code>shift</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Float64</code></td><td class="p-desc">bias init offset</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TRAINING -->
+<div class="section">
+  <div class="section-label">Training</div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>fitCatDist(w, b, data, categories, layers, iterations; &hellip;)</code></div>
+      <div class="fn-desc">Train categorical distribution via Adam on log-likelihood. Sequential sigmoid encoding. Mutates weights & biases.</div>
+      <div class="fn-ret">&#8594; (w, b, llv) &mdash; updated params + log-likelihood trace Vector{Float64}</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>w, b</code></td><td class="p-type"><code>Array</code></td><td class="p-desc">weights &amp; biases (mutated)</td></tr>
+        <tr><td class="p-name"><code>data</code></td><td class="p-type"><code>Matrix</code></td><td class="p-desc">N &times; (nvars[+1]) observations</td></tr>
+        <tr><td class="p-name"><code>categories</code></td><td class="p-type"><code>Vector</code></td><td class="p-desc">ordered category labels</td></tr>
+        <tr><td class="p-name"><code>layers</code></td><td class="p-type"><code>Vector{Int}</code></td><td class="p-desc">hidden layer widths</td></tr>
+        <tr><td class="p-name"><code>iterations</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">Adam steps</td></tr>
+        <tr><td class="p-name"><code>hotvars</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Vector{Int}</code></td><td class="p-desc">sigma-hot group sizes</td></tr>
+        <tr><td class="p-name"><code>obsweights</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Bool</code></td><td class="p-desc">last data col = obs weight</td></tr>
+        <tr><td class="p-name"><code>α β1 β2 ϵ</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Float64</code></td><td class="p-desc">Adam hyperparameters</td></tr>
+        <tr><td class="p-name"><code>c</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Vector{Float64}</code></td><td class="p-desc">weight clamp [c[1]=input, c[2]=rest]</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>fitConDist(w, b, data, layers1, layers2, iterations; &hellip;)</code></div>
+      <div class="fn-desc">Train continuous distribution via Adam on log-likelihood. Jacobian via warp layer. Mutates weights & biases.</div>
+      <div class="fn-ret">&#8594; (w, b, llv) &mdash; updated params + log-likelihood trace Vector{Float64}</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>w, b</code></td><td class="p-type"><code>Array</code></td><td class="p-desc">weights &amp; biases (mutated)</td></tr>
+        <tr><td class="p-name"><code>data</code></td><td class="p-type"><code>Matrix</code></td><td class="p-desc">N &times; (nvars[+1]) observations</td></tr>
+        <tr><td class="p-name"><code>layers1/2</code></td><td class="p-type"><code>Vector{Int}</code></td><td class="p-desc">pre-/post-warp layer widths</td></tr>
+        <tr><td class="p-name"><code>iterations</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">Adam steps</td></tr>
+        <tr><td class="p-name"><code>hotvars</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Vector{Int}</code></td><td class="p-desc">sigma-hot group sizes</td></tr>
+        <tr><td class="p-name"><code>obsweights</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Bool</code></td><td class="p-desc">last data col = obs weight</td></tr>
+        <tr><td class="p-name"><code>α β1 β2 ϵ</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Float64</code></td><td class="p-desc">Adam hyperparameters</td></tr>
+        <tr><td class="p-name"><code>c</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Vector{Float64}</code></td><td class="p-desc">weight clamp [c[1]=input, c[2]=rest]</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>fitTimDist(w, b, data, events, layers1, layers2, iterations; &hellip;)</code></div>
+      <div class="fn-desc">Train time-to-event network via Adam on log-likelihood. Handles exact events and interval-censored observations via two forward passes. Mutates weights & biases.</div>
+      <div class="fn-ret">&#8594; (w, b, llv) &mdash; updated params + log-likelihood trace Vector{Float64}</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>w, b</code></td><td class="p-type"><code>Array</code></td><td class="p-desc">weights &amp; biases (mutated)</td></tr>
+        <tr><td class="p-name"><code>data</code></td><td class="p-type"><code>Matrix</code></td><td class="p-desc">N &times; (nvars+2[+1]); cols nvars &amp; nvars+1 = time interval</td></tr>
+        <tr><td class="p-name"><code>events</code></td><td class="p-type"><code>Vector</code></td><td class="p-desc">event labels, length = nevents</td></tr>
+        <tr><td class="p-name"><code>layers1/2</code></td><td class="p-type"><code>Vector{Int}</code></td><td class="p-desc">pre-/post-warp layer widths</td></tr>
+        <tr><td class="p-name"><code>iterations</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">full Adam steps</td></tr>
+        <tr><td class="p-name"><code>hotvars</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Vector{Int}</code></td><td class="p-desc">sigma-hot group sizes</td></tr>
+        <tr><td class="p-name"><code>obsweights</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Bool</code></td><td class="p-desc">last data col = obs weight</td></tr>
+        <tr><td class="p-name"><code>α β1 β2 ϵ</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Float64</code></td><td class="p-desc">Adam hyperparameters</td></tr>
+        <tr><td class="p-name"><code>c</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Vector{Float64}</code></td><td class="p-desc">weight clamp [c[1]=input, c[2]=rest]</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- EVALUATION — PDF -->
+<div class="section">
+  <div class="section-label">Evaluation &mdash; PDF</div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>evalCatPDF(obs, ncats, layers, w, b)</code></div>
+      <div class="fn-desc">Returns the probability vector over all categories. Walks sequential sigmoid chain; last category gets remaining mass.</div>
+      <div class="fn-ret">&#8594; pcats :: Vector{Float64} (length = ncats, sums to 1)</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>obs</code></td><td class="p-type"><code>Vector{Float64}</code></td><td class="p-desc">covariates; last element = category value</td></tr>
+        <tr><td class="p-name"><code>ncats</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">number of categories</td></tr>
+        <tr><td class="p-name"><code>layers, w, b</code></td><td class="p-type"></td><td class="p-desc">trained network</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>evalConPDF(obs, layers1, layers2, w, b)</code></div>
+      <div class="fn-desc">Continuous density at a single observation. Returns Jacobian from the forward pass.</div>
+      <div class="fn-ret">&#8594; Float64 &mdash; density value</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>obs</code></td><td class="p-type"><code>Vector{Float64}</code></td><td class="p-desc">covariates + target value (last element)</td></tr>
+        <tr><td class="p-name"><code>layers1/2, w, b</code></td><td class="p-type"></td><td class="p-desc">trained network</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>evalTimPDF(obs, nevents, layers1, layers2, w, b)</code></div>
+      <div class="fn-desc">Joint event-probability vector and per-event conditional density vector for all competing events.</div>
+      <div class="fn-ret">&#8594; (pevents, devents) :: (Vector{Float64}, Vector{Float64}) each length = nevents</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>obs</code></td><td class="p-type"><code>Vector{Float64}</code></td><td class="p-desc">covariates; obs[end-1]=event label, obs[end]=time</td></tr>
+        <tr><td class="p-name"><code>nevents</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">number of competing events</td></tr>
+        <tr><td class="p-name"><code>layers1/2, w, b</code></td><td class="p-type"></td><td class="p-desc">trained network</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- EVALUATION — CDF -->
+<div class="section">
+  <div class="section-label">Evaluation &mdash; CDF</div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>evalConCDF(obs, layers1, layers2, w, b)</code></div>
+      <div class="fn-desc">CDF for continuous distribution at a single observation. Sigmoid at output layer; no Jacobian needed.</div>
+      <div class="fn-ret">&#8594; Float64 &isin; (0, 1)</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>obs</code></td><td class="p-type"><code>Vector{Float64}</code></td><td class="p-desc">covariates + target value</td></tr>
+        <tr><td class="p-name"><code>layers1/2, w, b</code></td><td class="p-type"></td><td class="p-desc">trained network</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>evalTimCDF(obs, nevents, layers1, layers2, w, b)</code></div>
+      <div class="fn-desc">Event-probability vector and per-event conditional time CDF vector at a single observation.</div>
+      <div class="fn-ret">&#8594; (pevents, devents) :: (Vector{Float64}, Vector{Float64}) each length = nevents</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>obs</code></td><td class="p-type"><code>Vector{Float64}</code></td><td class="p-desc">covariates; obs[end-1]=event label, obs[end]=time</td></tr>
+        <tr><td class="p-name"><code>nevents</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">number of competing events</td></tr>
+        <tr><td class="p-name"><code>layers1/2, w, b</code></td><td class="p-type"></td><td class="p-desc">trained network</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CDF LIMITS -->
+<div class="section">
+  <div class="section-label">CDF Limits</div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>limitsConCDF(layers1, layers2, w, b)</code></div>
+      <div class="fn-desc">Infimum and supremum of the continuous CDF, used for scaling when computing quantiles.</div>
+      <div class="fn-ret">&#8594; (inf, sup) :: (Float64, Float64)</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>layers1/2, w, b</code></td><td class="p-type"></td><td class="p-desc">trained network (no observation needed)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>limitsTimCDF(nevents, layers1, layers2, w, b)</code></div>
+      <div class="fn-desc">Per-event infimum and supremum of the time CDF, used for scaling when computing quantiles.</div>
+      <div class="fn-ret">&#8594; (inf, sup) :: (Vector{Float64}, Vector{Float64}) each length = nevents</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>nevents</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">number of competing events</td></tr>
+        <tr><td class="p-name"><code>layers1/2, w, b</code></td><td class="p-type"></td><td class="p-desc">trained network (no observation needed)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- QUANTILES -->
+<div class="section">
+  <div class="section-label">Quantiles</div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>quantileCon(cvars, p, layers1, layers2, w, b; accuracy, boundLow, boundUpp)</code></div>
+      <div class="fn-desc">Bisection-search quantile for continuous distribution. Bracket expands geometrically until p is enclosed.</div>
+      <div class="fn-ret">&#8594; Float64 &mdash; target value at cumulative probability p</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>cvars</code></td><td class="p-type"><code>Vector{Float64}</code></td><td class="p-desc">covariates (no target)</td></tr>
+        <tr><td class="p-name"><code>p</code></td><td class="p-type"><code>Float64</code></td><td class="p-desc">probability level &isin; (0,1)</td></tr>
+        <tr><td class="p-name"><code>layers1/2, w, b</code></td><td class="p-type"></td><td class="p-desc">trained network</td></tr>
+        <tr><td class="p-name"><code>accuracy</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Float64</code></td><td class="p-desc">bisection convergence tolerance</td></tr>
+        <tr><td class="p-name"><code>boundLow/Upp</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Float64</code></td><td class="p-desc">maximum bracket expansion limits</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="fn-card">
+    <div class="fn-left">
+      <div class="fn-sig"><code>quantileTim(cvars, eventnr, nevents, p, layers1, layers2, w, b; accuracy, boundLow, boundUpp)</code></div>
+      <div class="fn-desc">Bisection-search quantile for time distribution of a specific competing event. Bracket expands geometrically until p is enclosed.</div>
+      <div class="fn-ret">&#8594; Float64 &mdash; time at cumulative probability p for event eventnr</div>
+    </div>
+    <div class="fn-right">
+      <table class="param-tbl">
+        <tr><td class="p-name"><code>cvars</code></td><td class="p-type"><code>Vector{Float64}</code></td><td class="p-desc">covariates (no time)</td></tr>
+        <tr><td class="p-name"><code>eventnr</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">event index (1..nevents) to query</td></tr>
+        <tr><td class="p-name"><code>nevents</code></td><td class="p-type"><code>Int</code></td><td class="p-desc">number of competing events</td></tr>
+        <tr><td class="p-name"><code>p</code></td><td class="p-type"><code>Float64</code></td><td class="p-desc">probability level &isin; (0,1)</td></tr>
+        <tr><td class="p-name"><code>layers1/2, w, b</code></td><td class="p-type"></td><td class="p-desc">trained network</td></tr>
+        <tr><td class="p-name"><code>accuracy</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Float64</code></td><td class="p-desc">bisection convergence tolerance</td></tr>
+        <tr><td class="p-name"><code>boundLow/Upp</code> <span class="kw-badge">kw</span></td><td class="p-type"><code>Float64</code></td><td class="p-desc">maximum bracket expansion limits</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <span>Perunum Actuarieel Advies &nbsp;&middot;&nbsp; pTUM-base v6.0.0.0</span>
+  <span><a href="https://github.com/perunum">github.com/perunum</a></span>
+</div>
+
+</body>
+</html>
