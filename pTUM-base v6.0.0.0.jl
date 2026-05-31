@@ -429,43 +429,38 @@ function fitTimDist(w,b,data,events,layers1,layers2,iterations;hotvars=Int64[],o
                   if obs[nvars-1]==events[i]
                     eventnr=i
                   end
-                  ∂h∂x[1,l,i]=obsw*(i<eventnr ? 1/(x[1,l,i]-1) : (i==eventnr ? 1/x[1,l,i] : 0))
-                  ∂h∂x[2,l,i]=0
-                  sumf+=(i<eventnr ? log(1-x[1,l,i]) : (i==eventnr ? log(x[1,l,i]) : 0))
                   if (i==nevents)&&(eventnr>nevents)
                     sumf=fevents[i]*(1-x[1,l,i])
                   end
-                elseif (l==L)
-                  if eventnr<=nevents
-                    ∂h∂x[1,l,i]=(i==eventnr+((l2==0) ? nevents : 0) ? -x[1,l,i]/max(x[2,l,i]-x[1,l,i],1e-18) : 0)
-                    ∂h∂x[2,l,i]=(i==eventnr+((l2==0) ? nevents : 0) ? x[2,l,i]/max(x[2,l,i]-x[1,l,i],1e-18) : 0)
-                    sumf+=(i==eventnr+((l2==0) ? nevents : 0) ? log(max(x[2,l,i]-x[1,l,i],1e-18)) : 0)
-                  else
-                    sumf+=fevents[i-(l2==0 ? nevents : 0)]*x[t,l1+1,i-(l2==0 ? nevents : 0)]*(x[2,l,i]-x[1,l,i])
-                  end
-                end  
+                elseif (l==L)&&((i-(l2==0 ? nevents : 0)==eventnr)||(eventnr>nevents))
+                  sumf+=fevents[i-(l2==0 ? nevents : 0)]*x[t,l1+1,i-(l2==0 ? nevents : 0)]*(x[2,l,i]-x[1,l,i])
+                end
               end
             end
           end
         end
-        if eventnr<=nevents
-          h+=obsw*sumf
-        else
-          sumf=max(sumf,1e-18)
-          h+=obsw*log(sumf)
-          for i=1:nevents
+        sumf=max(sumf,1e-18)
+        h+=obsw*log(sumf)
+        for i=1:nevents
+          if eventnr>nevents
             ∂h∂x[1,l1+1,i]=-fevents[nevents]*(1-x[1,l1+1,nevents])/(1-x[1,l1+1,i])
-            j=i
-            ∂h∂x[1,l1+1,i]+=fevents[j]*(x[2,L,j+(l2==0 ? nevents : 0)]-x[1,L,j+(l2==0 ? nevents : 0)])
-            while j<nevents
-              j+=1
+          else
+            ∂h∂x[1,l1+1,i]=0
+          end
+          if (i==eventnr)||(eventnr>nevents)
+            ∂h∂x[1,l1+1,i]+=fevents[i]*(x[2,L,i+(l2==0 ? nevents : 0)]-x[1,L,i+(l2==0 ? nevents : 0)])
+          end
+          j=i
+          while j<nevents
+            j+=1
+            if (j==eventnr)||(eventnr>nevents)
               ∂h∂x[1,l1+1,i]-=fevents[j]*x[1,l1+1,j]/(1-x[1,l1+1,i])*(x[2,L,j+(l2==0 ? nevents : 0)]-x[1,L,j+(l2==0 ? nevents : 0)])
             end
-            ∂h∂x[1,l1+1,i]=obsw*∂h∂x[1,l1+1,i]/sumf
-            ∂h∂x[1,L,i+(l2==0 ? nevents : 0)]=-obsw*fevents[i]*x[1,l1+1,i]/sumf
-            ∂h∂x[2,l1+1,i]=0
-            ∂h∂x[2,L,i+(l2==0 ? nevents : 0)]=-∂h∂x[1,L,i+(l2==0 ? nevents : 0)]
-          end
+          end  
+          ∂h∂x[1,l1+1,i]=obsw*∂h∂x[1,l1+1,i]/sumf
+          ∂h∂x[1,L,i+(l2==0 ? nevents : 0)]=-obsw*fevents[i]*x[1,l1+1,i]/sumf
+          ∂h∂x[2,l1+1,i]=0
+          ∂h∂x[2,L,i+(l2==0 ? nevents : 0)]=-∂h∂x[1,L,i+(l2==0 ? nevents : 0)]
         end
         # propagate backward
         if iteration<iterations
