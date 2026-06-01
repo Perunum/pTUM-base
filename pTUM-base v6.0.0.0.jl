@@ -150,7 +150,7 @@ function fitCatDist(w,b,data,categories,layers,iterations;hotvars=Int64[],obswei
       for j=1:J
         i=1
         for hotvar=1:nhotvars
-          inbalance=0
+          imbalance=0
           hots=hotvars[hotvar]
           if hots==1
             i+=1
@@ -158,14 +158,14 @@ function fitCatDist(w,b,data,categories,layers,iterations;hotvars=Int64[],obswei
           end
           ii=hots
           while ii>0
-            inbalance+=w[1,j,i]*hotsums[i]
+            imbalance+=w[1,j,i]*hotsums[i]
             ii-=1
             i+=1
           end
-          inbalance=inbalance/nobs
-          b[1,j]+=inbalance
+          imbalance=imbalance/nobs
+          b[1,j]+=imbalance
           for ii=1:hots
-            w[1,j,i-ii]=max(-c[1],min(c[1],w[1,j,i-ii]-(hotvals[i-ii]==0 ? 0 : inbalance/hotvals[i-ii])))
+            w[1,j,i-ii]=max(-c[1],min(c[1],w[1,j,i-ii]-(hotvals[i-ii]==0 ? 0 : imbalance/hotvals[i-ii])))
           end
         end
       end
@@ -275,7 +275,7 @@ function fitConDist(w,b,data,layers1,layers2,iterations;hotvars=Int64[],obsweigh
       for j=1:J
         i=1
         for hotvar=1:nhotvars
-          inbalance=0
+          imbalance=0
           hots=hotvars[hotvar]
           if hots==1
             i+=1
@@ -283,14 +283,14 @@ function fitConDist(w,b,data,layers1,layers2,iterations;hotvars=Int64[],obsweigh
           end
           ii=hots
           while ii>0
-            inbalance+=w[1,j,i]*hotsums[i]
+            imbalance+=w[1,j,i]*hotsums[i]
             ii-=1
             i+=1
           end
-          inbalance=inbalance/nobs
-          b[1,j]+=inbalance
+          imbalance=imbalance/nobs
+          b[1,j]+=imbalance
           for ii=1:hots
-            w[1,j,i-ii]=max(-c[1],min(c[1],w[1,j,i-ii]-(hotvals[i-ii]==0 ? 0 : inbalance/hotvals[i-ii])))
+            w[1,j,i-ii]=max(-c[1],min(c[1],w[1,j,i-ii]-(hotvals[i-ii]==0 ? 0 : imbalance/hotvals[i-ii])))
           end
         end
       end
@@ -458,7 +458,11 @@ function fitTimDist(w,b,data,events,layers1,layers2,iterations;hotvars=Int64[],o
             end
           end  
           ∂h∂x[1,l1+1,i]=obsw*∂h∂x[1,l1+1,i]/sumf
-          ∂h∂x[1,L,i+(l2==0 ? nevents : 0)]=-obsw*fevents[i]*x[1,l1+1,i]/sumf
+          if (i==eventnr)||(eventnr>nevents)
+            ∂h∂x[1,L,i+(l2==0 ? nevents : 0)]=-obsw*fevents[i]*x[1,l1+1,i]/sumf
+          else
+            ∂h∂x[1,L,i+(l2==0 ? nevents : 0)]=0
+          end
           ∂h∂x[2,l1+1,i]=0
           ∂h∂x[2,L,i+(l2==0 ? nevents : 0)]=-∂h∂x[1,L,i+(l2==0 ? nevents : 0)]
         end
@@ -510,7 +514,7 @@ function fitTimDist(w,b,data,events,layers1,layers2,iterations;hotvars=Int64[],o
       for j=1:J
         i=1
         for hotvar=1:nhotvars
-          inbalance=0
+          imbalance=0
           hots=hotvars[hotvar]
           if hots==1
             i+=1
@@ -518,14 +522,14 @@ function fitTimDist(w,b,data,events,layers1,layers2,iterations;hotvars=Int64[],o
           end
           ii=hots
           while ii>0
-            inbalance+=w[1,j,i]*hotsums[i]
+            imbalance+=w[1,j,i]*hotsums[i]
             ii-=1
             i+=1
           end
-          inbalance=inbalance/nobs
-          b[1,j]+=inbalance
+          imbalance=imbalance/nobs
+          b[1,j]+=imbalance
           for ii=1:hots
-            w[1,j,i-ii]=max(-c[1],min(c[1],w[1,j,i-ii]-(hotvals[i-ii]==0 ? 0 : inbalance/hotvals[i-ii])))
+            w[1,j,i-ii]=max(-c[1],min(c[1],w[1,j,i-ii]-(hotvals[i-ii]==0 ? 0 : imbalance/hotvals[i-ii])))
           end
         end
       end
